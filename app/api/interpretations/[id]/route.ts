@@ -89,10 +89,10 @@ export async function PUT(
 
 
 export async function DELETE(req: Request,
-    {params}: {params: {id: string}}
+    context: {params: {id: string}}
 ){
     try {
-        const id = params.id;
+        const {id} = context.params;
         await deleteInterpretation(id)
         return NextResponse.json({message: "Interpretation Deleted"})
     } catch (error) {
