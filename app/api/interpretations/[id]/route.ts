@@ -52,10 +52,10 @@ async function updateInterpretation(
 
 export async function GET(
   req: Request,
-  context: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const {id} = context.params;
+    const {id} = await context.params;
     const interpretation = await fetchInterpretation(id);
     return NextResponse.json({interpretation});
   } catch (error) {
@@ -70,10 +70,10 @@ export async function GET(
 
 export async function PUT(
   req: Request,
-  context: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const {id} = context.params;
+    const {id} = await context.params;
     const interpretation = await req.json();
     const response = await updateInterpretation(id, interpretation);
     return NextResponse.json({message: 'Interpretation updated', data: response});
@@ -89,10 +89,10 @@ export async function PUT(
 
 
 export async function DELETE(req: Request,
-    context: {params: {id: string}}
+    context: {params: Promise<{id: string}>}
 ){
     try {
-        const {id} = context.params;
+        const {id} = await context.params;
         await deleteInterpretation(id)
         return NextResponse.json({message: "Interpretation Deleted"})
     } catch (error) {
