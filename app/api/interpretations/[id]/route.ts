@@ -52,10 +52,10 @@ async function updateInterpretation(
 
 export async function GET(
   req: Request,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
-    const id = params.id;
+    const {id} = context.params;
     const interpretation = await fetchInterpretation(id);
     return NextResponse.json({interpretation});
   } catch (error) {
@@ -70,10 +70,10 @@ export async function GET(
 
 export async function PUT(
   req: Request,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
-    const id = params.id;
+    const {id} = context.params;
     const interpretation = await req.json();
     const response = await updateInterpretation(id, interpretation);
     return NextResponse.json({message: 'Interpretation updated', data: response});
